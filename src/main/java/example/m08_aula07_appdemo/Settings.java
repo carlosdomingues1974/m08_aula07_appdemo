@@ -31,12 +31,20 @@ public class Settings {
     /**
      * ObservableList de Alunos
      */
-    public static ObservableList<Aluno> listaAlunos = FXCollections.observableArrayList();
+    private static ObservableList<Aluno> listaAlunos = FXCollections.observableArrayList();
+
+    public static ObservableList<Aluno> getListaAlunos() {
+        return listaAlunos;
+    }
+
+    public static void setListaAlunos(ObservableList<Aluno> listaAlunos) {
+        Settings.listaAlunos = listaAlunos;
+    }
 
     /**
      * Carrega os alunos da turma na LIST
      */
-    public static void CarregaListAlunos(){
+    public static void loadStudentList(){
         listaAlunos.add(new Aluno(1, "André Rodrigues Campos", LocalDate.of(2001,7,12), true));
         listaAlunos.add(new Aluno(2, "Arízio Costa Badjana", LocalDate.of(2001,10,10), true));
         listaAlunos.add(new Aluno(3, "Arydson Pires Soares", LocalDate.of(2003,4,17), true));

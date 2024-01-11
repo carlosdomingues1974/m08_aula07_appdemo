@@ -43,6 +43,8 @@ public class MainApp extends Application {
          *  a definição da modalariadade, caso contrário o sistema MODAL não irá funcionar.
          */
         Settings.setPrimaryStage(primaryStage);
+        // Carregamento das listas principais das Entidades: ObservableList
+        Settings.loadStudentList();
         //Abertura da stage
         primaryStage.show();
     }
