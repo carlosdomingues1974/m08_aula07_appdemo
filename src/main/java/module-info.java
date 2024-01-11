@@ -5,6 +5,5 @@ module example.m08_aula07_appdemo {
 
     opens example.m08_aula07_appdemo to javafx.fxml;
     exports example.m08_aula07_appdemo;
-    exports example.m08_aula07_appdemo.controller;
-    opens example.m08_aula07_appdemo.controller to javafx.fxml;
+
 }
