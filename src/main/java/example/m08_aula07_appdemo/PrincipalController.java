@@ -73,4 +73,24 @@ public class PrincipalController {
         // Atribuição da Scene à zona central da cena Principal, que é um BorderPane
         borderPane.setCenter(scene);
     }
+
+    public void menuInsertStudent(ActionEvent actionEvent) throws Exception{
+        // Abre a Scene numa nova Stage em modo Modal
+        // Aquisição do controlo da cena pretendida (student.fxml)
+        Parent scene = FXMLLoader.load(getClass().getResource("student.fxml"));
+
+        // Nova janela (Stage)
+        Stage addStudent = new Stage();
+        addStudent.setTitle("Aplicação de Demonstração - Inserir Aluno");
+
+        // Associação da Scene à Stage
+        addStudent.setScene(new Scene(scene));
+
+        // Abertura da janela addStudent em modo MODAL, em relação à primaryStage
+        addStudent.initOwner(Settings.getPrimaryStage());
+        addStudent.initModality(Modality.WINDOW_MODAL);
+
+        // Abertura da janela
+        addStudent.show();
+    }
 }

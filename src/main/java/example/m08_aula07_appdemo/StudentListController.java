@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ResourceBundle;
 
-public class StudentlistController implements Initializable {
+public class StudentListController implements Initializable {
     //region Dados locais e Controlos XML
 
     // Atributo (Control) da tableView
