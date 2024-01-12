@@ -2,7 +2,10 @@ package example.m08_aula07_appdemo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -102,7 +105,17 @@ public class StudentlistController implements Initializable {
     public void buttonDelete(ActionEvent actionEvent) {
     }
 
-    public void buttonClose(ActionEvent actionEvent) {
+    /**
+     * permite sair da cena atual. Repôe a cena Principal na Stage
+     * @param actionEvent executa o evento
+     * @throws Exception erve para ignorar todos o warnings de exceções. Caso contrário temos qe usar o try...catch
+     */
+    public void buttonClose(ActionEvent actionEvent) throws Exception {
+        // Aquisição do controlo da Scene pretendida
+        Parent scene = FXMLLoader.load(getClass().getResource("principal.fxml"));
+
+        // Voltar à cena principal da Stage
+        Settings.getPrimaryStage().setScene(new Scene(scene));
     }
 
 }
