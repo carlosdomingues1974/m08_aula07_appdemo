@@ -3,12 +3,14 @@ package example.m08_aula07_appdemo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ResourceBundle;
 
 public class StudentlistController implements Initializable {
@@ -44,6 +46,52 @@ public class StudentlistController implements Initializable {
         tableColumnName.setCellValueFactory(new PropertyValueFactory<Aluno, String>("nome"));
         tableColumnAge.setCellValueFactory(new PropertyValueFactory<Aluno, LocalDate>("dataNascimento"));
         tableColumnGender.setCellValueFactory(new PropertyValueFactory<Aluno, Boolean>("genero"));
+
+        /**
+         * Conversão dos dados da coluna Género. O método setCellFactory permite faze-lo.
+         * Neste caso, queremos substituir o boolean do atributo genero por uma
+         * string (true = Masculino; false = Femenino).
+         * Passamos por parâmetro a classe do objeto da Lista (Aluno) e o tipo de dados (Boolean)
+         * a tratar antes de chegar à coluna.
+         * As instruções de substituição fazem-se no método updateItem.
+         */
+        tableColumnGender.setCellFactory(evt -> new TableCell<Aluno, Boolean>(){
+            /**
+             *  Método que permite especificar a conversão do valor a surgir na coluna
+             * @param item recebe os dados que queremos tratar. Só temos que alterar o tipo de dados do parâmetro: Boolean
+             * @param empty é um boolean que informa se o objeto da lista (Aluno) é null. Este parâmetro nunca se modifica.
+             */
+            @Override
+            protected void updateItem(Boolean item, boolean empty){
+                super.updateItem(item, empty);
+                // Caso o Aluno venha null não faz nada. Caso contrário, testa o item (Género -> Boolean)
+                setText(empty ? null : item ? "Masculino" : "Femenino");
+            }
+        });
+
+        /**
+         * Conversão dos dados da coluna Idade. O método setCellFactory permite faze-lo.
+         * Neste caso, queremos substituir a data de nascimento (LocalDate), pela idade (Integer).
+         * Passamos por parâmetro a classe do objeto da Lista (Aluno) e o tipo de dados (LocalDate)
+         * a tratar antes de chegar à coluna.
+         * As instruções de substituição fazem-se no método upDateItem.
+         */
+        tableColumnAge.setCellFactory(evt -> new TableCell<Aluno, LocalDate>(){
+            /**
+             * Método que permite especificar a conversão do valor a surgir na coluna
+             * @param item recebe os dados que queremos tratar. Só temos que alterar o tipo de dados do parâmetro: LocalDate
+             * @param empty é um boolean que informa se o objeto da lista (Aluno) é null. Este parâmetro nunca se modifica.
+             */
+            @Override
+            protected void updateItem(LocalDate item, boolean empty){
+                super.updateItem(item, empty);
+                // Caso o empty (Aluno) esteja a null, não preenche nada. Caso contrário calcula a idade do aluno
+                if(!empty){
+                    Period age = Period.between(item, LocalDate.now());
+                    setText(String.valueOf(age.getYears()));
+                }
+            }
+        });
 
         // Associação da ObservableList à TableView. A partir daqui, tudo se faz na ObservableList.
         tableView.setItems(Settings.getListaAlunos());
