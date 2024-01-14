@@ -2,6 +2,7 @@ package example.m08_aula07_appdemo;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -23,6 +24,34 @@ public class Settings {
 
     public static void setPrimaryStage(Stage primaryStage) {
         Settings.primaryStage = primaryStage;
+    }
+    //endregion
+
+    //region das Flag Action
+    /** FLAG de Sinalização da Ação das Scenes Edit.
+     * Trabalha com as Constantes,a seguir definidas. 4 estados:
+     *-1    - Não está a ser utilizado
+     * 1    - INSERT
+     * 2    - UPDATE
+     * 3    - DELETE
+     */
+    public static int ACTION = -1;
+
+    // Constantes para definir as operações da FLAG ACTION
+    public static final int ACTION_INSERT = 1;
+    public static final int ACTION_UPDATE = 2;
+    public static final int ACTION_DELETE = 3;
+    //endregion
+
+    //region objetos das Entidades (ALuno)
+    private static Aluno studentEdit;
+
+    public static Aluno getStudentEdit() {
+        return studentEdit;
+    }
+
+    public static void setStudentEdit(Aluno studentEdit) {
+        Settings.studentEdit = studentEdit;
     }
     //endregion
 
@@ -65,5 +94,9 @@ public class Settings {
         listaAlunos.add(new Aluno(20, "Rodrigo da Silveira Pereira", LocalDate.of(2003,3,6), true));
         listaAlunos.add(new Aluno(21, "Tiago Maria Neves", LocalDate.of(2003,6,8), true));
     }
+    //endregion
+
+    // region Métodos de validação de dados
+
     //endregion
 }

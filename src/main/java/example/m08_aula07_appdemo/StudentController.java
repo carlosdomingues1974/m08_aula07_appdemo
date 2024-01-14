@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
@@ -46,7 +48,12 @@ public class StudentController implements Initializable {
     private RadioButton rbFemale;
     @FXML
     private Button btnAction;
+
+    // Controlo da Stage. Obtém-se a partir de qualquer Controlo dos elementos FXML.
+    @FXML
+    private Stage thisStage;
     //endregion
+
     //region Loader
     /**
      * Método LOADER
@@ -62,12 +69,57 @@ public class StudentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Se flag Action não está definida => notifica e termina
+        if(Settings.ACTION == -1){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Sair da aplicação");
+            alert.setHeaderText("A flag Action não está definida");
+            alert.show();
+        }
+        //Preparação da cena
+        switch (Settings.ACTION){
+            case Settings.ACTION_INSERT:
+                // Altera o texto do título e do botão Action
+                // Os campos são apresentados abertos e vazios
+                lblTitle.setText("Inserção do Aluno");
+                btnAction.setText("Inserir");
+                break;
+            case Settings.ACTION_UPDATE:
+                // Altera o texto do título e do botão Action
+                lblTitle.setText("Alteração do Aluno");
+                btnAction.setText("Alterar");
+                break;
+            case Settings.ACTION_DELETE:
+                // Altera o texto do título e do botão Action
+                lblTitle.setText("Eliminação do Aluno");
+                btnAction.setText("Eliminar");
+                break;
+        }
 
     }
     //endregion
 
     //region Ações
     public void buttonAction(ActionEvent actionEvent) {
+        switch (Settings.ACTION){
+            case Settings.ACTION_INSERT:
+                // Recolha dos dados existentes nos Controlos (objetos gráficos da janela)
+                // para um novo objeto.
+                int number = Integer.parseInt(txtNumber.getText());
+                String name = txtName.getText();
+                LocalDate birth = datePickerBirthDate.getValue();
+                boolean gender = rbMale.isSelected();
+                Aluno newStudent = new Aluno(number,name,birth,gender);
+
+                //Adiciona o novo Aluno à TableView
+                Settings.getListaAlunos().add(newStudent);
+
+        }
+        // Reposição da Flag e do Objeto Entidade da classe Settings e encerramento da Stage
+        Settings.ACTION = -1;
+        Settings.setStudentEdit(null);
+        thisStage = (Stage) btnAction.getScene().getWindow();
+        thisStage.close();
     }
 
     public void buttonCancel(ActionEvent actionEvent) {

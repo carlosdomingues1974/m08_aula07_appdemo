@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="example.m08_aula07_appdemo.StudentController">
    <children>
-      <Label fx:id="lblTitle" layoutX="226.0" layoutY="26.0" prefHeight="35.0" prefWidth="148.0" text="Action Label" textFill="#1647a3">
+      <Label fx:id="lblTitle" alignment="CENTER" layoutX="1.0" layoutY="26.0" prefHeight="35.0" prefWidth="600.0" text="Action Label" textAlignment="CENTER" textFill="#1647a3">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -42,13 +42,11 @@
       <fx:define>
          <ToggleGroup fx:id="groupGender" />
       </fx:define>
-      <RadioButton fx:id="rbMale" layoutX="190.0" layoutY="232.0" mnemonicParsing="false" text="Masculino" textFill="#315d9f" AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="230.0">
+      <RadioButton fx:id="rbMale" layoutX="190.0" layoutY="232.0" mnemonicParsing="false" text="Masculino" textFill="#315d9f" toggleGroup="$groupGender" AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="230.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
-         <toggleGroup>
-            <ToggleGroup fx:id="groupGender" />
-         </toggleGroup>
+
       </RadioButton>
       <RadioButton fx:id="rbFemale" layoutX="317.0" layoutY="230.0" mnemonicParsing="false" text="Feminino" textFill="#315d9f" toggleGroup="$groupGender" AnchorPane.topAnchor="230.0">
          <font>
@@ -60,7 +58,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancel" layoutX="200.0" layoutY="298.0" mnemonicParsing="false" onAction="#buttonCancel" prefHeight="25.0" prefWidth="87.0" text="Cancelar" textFill="#315d9f" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="320.0">
+      <Button layoutX="200.0" layoutY="298.0" mnemonicParsing="false" onAction="#buttonCancel" prefHeight="25.0" prefWidth="87.0" text="Cancelar" textFill="#315d9f" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="320.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

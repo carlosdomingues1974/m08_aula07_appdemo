@@ -75,6 +75,8 @@ public class PrincipalController {
     }
 
     public void menuInsertStudent(ActionEvent actionEvent) throws Exception{
+        // Definição da Flag Action
+        Settings.ACTION = Settings.ACTION_INSERT;
         // Abre a Scene numa nova Stage em modo Modal
         // Aquisição do controlo da cena pretendida (student.fxml)
         Parent scene = FXMLLoader.load(getClass().getResource("student.fxml"));
