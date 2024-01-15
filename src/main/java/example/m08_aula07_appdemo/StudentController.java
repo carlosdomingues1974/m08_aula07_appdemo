@@ -129,7 +129,31 @@ public class StudentController implements Initializable {
 
                 //Adiciona o novo Aluno à TableView
                 Settings.getListaAlunos().add(newStudent);
+                break;
+            case Settings.ACTION_UPDATE:
+                //Recolha dos dados existentes nos Controlos (objetos gráficos da janela)
+                // para o mesmo objeto.
+                Settings.getStudentEdit().setNome(txtName.getText());
+                Settings.getStudentEdit().setDataNascimento(datePickerBirthDate.getValue());
+                Settings.getStudentEdit().setGenero(rbMale.isSelected());
 
+                // Executa a alteração na Lista
+                for (Aluno aluno : Settings.getListaAlunos())
+                {
+                    //Quando descobrir o objeto, faz a substituição
+                    if (aluno.getId() == Settings.getStudentEdit().getId())
+                    {
+                        // Saca o índice do elemento na Lista
+                        int index = Settings.getListaAlunos().indexOf(aluno);
+
+                        // Substitui o objeto pelo novo
+                        Settings.getListaAlunos().set(index, Settings.getStudentEdit());
+
+                        // Sai do ciclo
+                        break;
+                    }
+                }
+                break;
         }
         // Reposição da Flag e do Objeto Entidade da classe Settings e encerramento da Stage
         Settings.ACTION = -1;
