@@ -6,10 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -99,7 +102,50 @@ public class StudentListController implements Initializable {
         // Associação da ObservableList à TableView. A partir daqui, tudo se faz na ObservableList.
         tableView.setItems(Settings.getListaAlunos());
     }
-    public void buttonEdit(ActionEvent actionEvent) {
+
+    /**
+     * Editar/ Atualizar o item selecionado
+     * 1º Verifica se há algum item selecionado
+     * 2º Extrai o Objeto
+     * 3º Atualiza Settings com a FLAG Action a 2 e o Objeto Entidade
+     * @param actionEvent executa o evento
+     * @throws Exception serve para ignorar todos o warnings de exceções. Caso contrário temos qe usar o try...catch
+     */
+    public void buttonEdit(ActionEvent actionEvent) throws Exception {
+        // Caso não haja um item selecionado notifica o Utilizador e termina.
+        if(tableView.getSelectionModel().getSelectedItem() == null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Item não selecionado");
+            alert.setHeaderText("Selecione um item, por favor!");
+            alert.show();
+            return;
+        }
+        // Se chegou aqui é porque há um item selecionado => Extrai-o
+        // O método devolve um Object porque nunca sabe o que lá vem. => Cast para Aluno.
+        Aluno selectedItem = (Aluno) tableView.getSelectionModel().getSelectedItem();
+
+        // Definição da Flag Ation e do objeto de Entidade de settings com Insert
+        Settings.ACTION = Settings.ACTION_UPDATE;
+        Settings.setStudentEdit(selectedItem);
+
+        // Abre a Scene numa nova Stage em modo Modal
+        // Aquisição do controlo da Scene pretendida
+        Parent scene = FXMLLoader.load(getClass().getResource("student.fxml"));
+
+        // Nova janela
+        Stage studentEdit = new Stage();
+        studentEdit.setTitle("Aplicação de Demonstração - Atualizar Aluno");
+
+        // Associação da Scene à Stage
+        studentEdit.setScene(new Scene(scene));
+
+        // Abertura da janela edit Student em modo MODAL, em relação à primaryStage
+        studentEdit.initOwner(Settings.getPrimaryStage());
+        studentEdit.initModality(Modality.WINDOW_MODAL);
+
+        // Abertura da Window
+        studentEdit.show();
+
     }
 
     public void buttonDelete(ActionEvent actionEvent) {

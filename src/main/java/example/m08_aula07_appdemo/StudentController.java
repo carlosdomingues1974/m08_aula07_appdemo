@@ -88,6 +88,22 @@ public class StudentController implements Initializable {
                 // Altera o texto do título e do botão Action
                 lblTitle.setText("Alteração do Aluno");
                 btnAction.setText("Alterar");
+
+                //Campo referente ao número de processo deve estar disable
+                txtNumber.setDisable(true);
+                //Preencher os campos com os dados do objeto Aluno
+                //que pretendemos editar/ atualizar
+                txtNumber.setText(String.valueOf(Settings.getStudentEdit().getId()));
+                txtName.setText(Settings.getStudentEdit().getNome());
+                datePickerBirthDate.setValue(Settings.getStudentEdit().getDataNascimento());
+                if(Settings.getStudentEdit().isGenero()){
+                    rbMale.setSelected(true);
+                    //rbFemale.setSelected(false);
+                }
+                else{
+                    rbFemale.setSelected(true);
+                    rbMale.setSelected(false);
+                }
                 break;
             case Settings.ACTION_DELETE:
                 // Altera o texto do título e do botão Action
@@ -122,7 +138,17 @@ public class StudentController implements Initializable {
         thisStage.close();
     }
 
+    /**
+     * Button Cancelar
+     * Termina a Stage com a reposição dos valores nulls da flag Action e objeto Entidade
+     * @param actionEvent executa o evento
+     */
     public void buttonCancel(ActionEvent actionEvent) {
+        // Reposição da Flag e Objeto Entidade em Settings e encerramento da Stage
+        Settings.ACTION = -1;
+        Settings.setStudentEdit(null);
+        thisStage = (Stage) btnAction.getScene().getWindow();
+        thisStage.close();
     }
     //endregion
 

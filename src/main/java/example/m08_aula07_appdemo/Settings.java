@@ -1,10 +1,13 @@
 package example.m08_aula07_appdemo;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 public class Settings {
@@ -98,5 +101,30 @@ public class Settings {
 
     // region Métodos de validação de dados
 
+    /**
+     * Método para limitar o preenchimento de qualquer TextField a um número máximo de carateres
+     * @param textField mensagem a tratar
+     * @param maxLength tamanho máximo a impor
+     */
+    public static void checkMaxLength(TextField textField, int maxLength) {
+        textField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                if (textField.getText().length() > maxLength) {
+                    String s = textField.getText().substring(0, maxLength);
+                    textField.setText(s);
+                }
+            }
+        });
+    }
+
+    public static void isNumeric(TextField textField){
+        textField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+
+            }
+        });
+    }
     //endregion
 }
