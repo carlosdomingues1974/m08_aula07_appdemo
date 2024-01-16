@@ -148,7 +148,51 @@ public class StudentListController implements Initializable {
 
     }
 
-    public void buttonDelete(ActionEvent actionEvent) {
+    /**
+     * Eliminar o Item Selecionado
+     * 1º Verifica se há algum item selecionado
+     * 2º Extrai o Objeto
+     * 3º Atualiza Settings com a FLAG Action a 3 e o Objeto Entidade
+     * @param actionEvent executa o evento
+     * @throws Exception serve para ignorar todos o warnings de exceções. Caso contrário temos qe usar o try...catch
+     */
+    public void buttonDelete(ActionEvent actionEvent) throws Exception{
+        // Caso não haja um item selecionado notifica o Utilizador e termina.
+        if(tableView.getSelectionModel().getSelectedItem() == null){
+
+            // Notifica o utilizdor e termina
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Item não selecionado");
+            alert.setHeaderText("Selecione um item, por favor!");
+            alert.show();
+            return;
+        }
+        // Se chegou aqui é porque há um item selecionado => Extrai-o
+        // O método devolve um Object porque nunca sabe o que lá vem. => Cast para Aluno.
+        Aluno selectedItem = (Aluno) tableView.getSelectionModel().getSelectedItem();
+
+        // Definição da Flag Ation e do objeto de Entidade de settings com Insert
+        Settings.ACTION = Settings.ACTION_DELETE;
+        Settings.setStudentEdit(selectedItem);
+
+        // Abre a Scene numa nova Stage em modo Modal
+        // Aquisição do controlo da Scene pretendida
+        Parent scene = FXMLLoader.load(getClass().getResource("student.fxml"));
+
+        // Nova janela
+        Stage studentDelete = new Stage();
+        studentDelete.setTitle("Aplicação de Demonstração - Eliminar Aluno");
+
+        // Associação da Scene à Stage
+        studentDelete.setScene(new Scene(scene));
+
+        // Abertura da janela edit Student em modo MODAL, em relação à primaryStage
+        studentDelete.initOwner(Settings.getPrimaryStage());
+        studentDelete.initModality(Modality.WINDOW_MODAL);
+
+        // Abertura da Window
+        studentDelete.show();
+
     }
 
     /**

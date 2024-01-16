@@ -102,13 +102,34 @@ public class StudentController implements Initializable {
                 }
                 else{
                     rbFemale.setSelected(true);
-                    rbMale.setSelected(false);
+                    //rbMale.setSelected(false);
                 }
                 break;
             case Settings.ACTION_DELETE:
                 // Altera o texto do título e do botão Action
                 lblTitle.setText("Eliminação do Aluno");
                 btnAction.setText("Eliminar");
+
+                //Preencher os campos com os dados do objeto Aluno
+                //que pretendemos eliminar
+                txtNumber.setText(String.valueOf(Settings.getStudentEdit().getId()));
+                txtName.setText(Settings.getStudentEdit().getNome());
+                datePickerBirthDate.setValue(Settings.getStudentEdit().getDataNascimento());
+                if(Settings.getStudentEdit().isGenero()){
+                    rbMale.setSelected(true);
+                    //rbFemale.setSelected(false);
+                }
+                else{
+                    rbFemale.setSelected(true);
+                    //rbMale.setSelected(false);
+                }
+
+                //Campos que devem estar disable
+                txtNumber.setDisable(true);
+                txtName.setDisable(true);
+                datePickerBirthDate.setDisable(true);
+                rbMale.setDisable(true);
+                rbFemale.setDisable(true);
                 break;
         }
 
@@ -116,6 +137,12 @@ public class StudentController implements Initializable {
     //endregion
 
     //region Ações
+
+    /**
+     * Executa a ação, em função da FLAG ACTION (INSERT, UPDATE e DELETE).
+     * Termina a ação com a reposição dos valores nulls da flag Action e objeto Entidade (Aluno)
+     * @param actionEvent executa um evento
+     */
     public void buttonAction(ActionEvent actionEvent) {
         switch (Settings.ACTION){
             case Settings.ACTION_INSERT:
@@ -149,6 +176,18 @@ public class StudentController implements Initializable {
                         // Substitui o objeto pelo novo
                         Settings.getListaAlunos().set(index, Settings.getStudentEdit());
 
+                        // Sai do ciclo
+                        break;
+                    }
+                }
+                break;
+            case Settings.ACTION_DELETE:
+                // Procura e elimina o objeto da Lista geral
+                for (Aluno aluno : Settings.getListaAlunos())
+                {
+                    if (aluno.getId() == Settings.getStudentEdit().getId())
+                    {
+                        Settings.getListaAlunos().remove(Settings.getStudentEdit());
                         // Sai do ciclo
                         break;
                     }
